@@ -50,4 +50,4 @@ jobs:
     - name: Update ECS service with new task definition
       id: update-ecs-service
       run: |
-        aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --task-definition ${{ steps.get-task-def-arn.outputs.task-definition-arn }}
+        aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --task-definition ${{ steps.get-task-def-arn.outputs.task-definition-arn }} --force-new-deployment
