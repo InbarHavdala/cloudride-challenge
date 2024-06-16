@@ -1,19 +1,12 @@
 # Cloudride Challenge: AWS Infrastructure and CI/CD Pipeline Deployment
 
-This repository contains Terraform scripts and GitHub Actions workflows to deploy and manage AWS infrastructure and automate CI/CD pipelines for a simple "Hello World" application on ECS.
+This repository contains Terraform file and GitHub Actions workflow to deploy and manage AWS infrastructure and automate CI/CD pipelines for a simple "Hello World" application on ECS.
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Infrastructure Deployment](#infrastructure-deployment)
-3. [CI/CD Pipeline](#ci-cd-pipeline)
-4. [AWS Pillars](#aws-pillars)
-
----
-
-## Overview
-
-The Cloudride challenge involves setting up and automating AWS infrastructure and CI/CD processes using Terraform and GitHub Actions. This README provides a detailed overview of the deployed infrastructure and the automation pipeline.
+1. [Infrastructure Deployment](#infrastructure-deployment)
+2. [CI/CD Pipeline](#ci-cd-pipeline)
+3. [AWS Pillars](#aws-pillars)
 
 ---
 
@@ -23,7 +16,7 @@ The Cloudride challenge involves setting up and automating AWS infrastructure an
 
 The infrastructure includes:
 
-- **VPC**: Created with public and private subnets across multiple availability zones (AZs).
+- **VPC**: Created 4 Subnets - 2 public subnets & 2 private subnets.
 - **Internet Gateway**: Attached to the VPC for internet access from public subnets.
 - **Subnets**: Two public subnets and two private subnets distributed across different AZs for high availability.
 - **Route Tables**: Configured to route traffic between subnets and to the internet via the internet gateway.
@@ -32,7 +25,6 @@ The infrastructure includes:
 ### ECS Cluster and Services
 
 - **ECS Cluster**: Created to host Docker containers.
-- **Task Definition**: Specifies the configuration for the "Hello World" Docker container, including resource allocation and network settings.
 - **Service**: ECS Service configured with Service Auto Scaling to maintain a desired count of at least 2 tasks (containers) based on metrics like CPU utilization.
 - **Load Balancer**: Application Load Balancer (ALB) deployed in public subnets to manage incoming traffic to ECS services.
 - **Monitoring**: CloudWatch Alarms set up to monitor ECS task health, triggering alerts for container errors or other issues.
