@@ -7,47 +7,42 @@ on:
 
 env:
   AWS_REGION: eu-west-1
+  ECR_REGISTRY: 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo
   ECR_REPOSITORY: hello-world-repo
-  ECS_SERVICE: hello_world
-  ECS_CLUSTER: ecs-cluster
-  ECS_TASK_DEFINITION: hello_world
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: Get latest ECS task definition ARN
-      id: get-task-def-arn
-      run: |
-        TASK_DEFINITION_ARN=$(aws ecs describe-task-definition --task-definition ${ECS_TASK_DEFINITION} --query 'taskDefinition.taskDefinitionArn' --output text)
-        echo "::set-output name=task-definition-arn::$TASK_DEFINITION_ARN"
+      - name: Write image definitions file
+        run: printf '[{"name":"hello-world-container","imageUri":"%s"}]' $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} > imagedefinitions.json
 
-    - name: Update ECS service with new task definition
-      id: update-ecs-service
-      run: |
-        aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --task-definition ${{ steps.get-task-def-arn.outputs.task-definition-arn }} --force-new-deployment
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: imagedefinitions
+          path: imagedefinitions.json
