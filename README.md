@@ -16,18 +16,17 @@ This repository contains Terraform file and GitHub Actions workflow to deploy an
 
 The infrastructure includes:
 
-- **VPC**: Created 4 Subnets - 2 public subnets & 2 private subnets.
+- **VPC**: Created with public and private subnets across differnt availability zones (azs).
 - **Internet Gateway**: Attached to the VPC for internet access from public subnets.
-- **Subnets**: Two public subnets and two private subnets distributed across different AZs for high availability.
-- **Route Tables**: Configured to route traffic between subnets and to the internet via the internet gateway.
-- **Security Groups**: Defined to control inbound and outbound traffic for ECS containers and other resources.
+- **Subnets**: Two public subnets and two private subnets distributed across different AZs for high availability
+- **Security Groups**: Defined to control inbound and outbound traffic for ECS containers and load balancer.
 
 ### ECS Cluster and Services
 
 - **ECS Cluster**: Created to host Docker containers.
 - **Service**: ECS Service configured with Service Auto Scaling to maintain a desired count of at least 2 tasks (containers) based on metrics like CPU utilization.
 - **Load Balancer**: Application Load Balancer (ALB) deployed in public subnets to manage incoming traffic to ECS services.
-- **Monitoring**: CloudWatch Alarms set up to monitor ECS task health, triggering alerts for container errors or other issues.
+- **Monitoring**: CloudWatch Alarms set up to monitor ECS task health.
 
 ---
 
