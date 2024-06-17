@@ -24,11 +24,6 @@ The infrastructure includes:
 ### ECS Cluster and Services
 
 - **ECS Cluster**: Created to host Docker containers.
-  ```
-  docker tag hello-world-html:latest 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
-  aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 753392824297.dkr.ecr.eu-west-1.amazonaws.com
-  docker push 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
-  ```
 - **Service**: ECS Service configured with Service Auto Scaling to maintain a desired count of at least 2 tasks (containers) based on metrics like CPU utilization.
 - **Load Balancer**: Application Load Balancer (ALB) deployed in public subnets to manage incoming traffic to ECS services.
 - **Monitoring**: CloudWatch Alarms set up to monitor ECS task health.
@@ -44,6 +39,11 @@ The infrastructure includes:
   - Configures AWS credentials and logs into Amazon ECR.
   - Builds the Docker image, tags it with a unique identifier.
   - Pushes the image to the specified ECR repository.
+  ```
+  docker tag hello-world-html:latest 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
+  aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 753392824297.dkr.ecr.eu-west-1.amazonaws.com
+  docker push 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
+  ```
   - Updates the ECS task definition with the new image URI.
 - **Continuous Deployment**: The updated task definition triggers a deployment to ECS, ensuring the latest changes are applied to the running containers.
 
