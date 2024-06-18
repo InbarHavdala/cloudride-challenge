@@ -53,6 +53,10 @@ jobs:
     needs: deploy
 
     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -61,14 +65,17 @@ jobs:
       - name: Terraform Formate
         id: fmt
         run: terraform fmt
+        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
 
       - name: Terraform Initialize
         id: init
         run: terraform init
+        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
 
       - name: Terraform Plan
         id: plan
         run: terraform plan
+        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
  
       - name: Terraform Apply
         run: terraform apply
