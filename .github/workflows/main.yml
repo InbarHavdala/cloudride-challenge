@@ -46,3 +46,27 @@ jobs:
         with:
           name: imagedefinitions
           path: imagedefinitions.json
+
+  terraform-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.6
+
+      - name: Terraform Formate
+        id: fmt
+        run: terraform fmt
+
+      - name: Terraform Initialize
+        id: init
+        run: terraform init
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+ 
+      - name: Terraform Apply
+        run: terraform apply
