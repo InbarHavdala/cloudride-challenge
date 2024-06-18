@@ -57,7 +57,7 @@ jobs:
     steps:
       - name: test
         id: test
-        run: ls ./
+        run: ls /home/runner/work/cloudride-challenge/cloudride-challenge
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
