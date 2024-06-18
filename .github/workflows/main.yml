@@ -55,6 +55,10 @@ jobs:
         working-directory: ./
 
     steps:
+      - name: test
+        id: test
+        run: ls ./
+    
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
