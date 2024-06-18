@@ -39,7 +39,7 @@ jobs:
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Write image definitions file
-        run: printf '[{"name":"hello-world-container","imageUri":"%s"}]' $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} > imagedefinitions.json
+        run: printf '[{"name":"hello-world-container","imageUri":"%s:Image"}]' $ECR_REGISTRY/$ECR_REPOSITORY > imagedefinitions.json
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
