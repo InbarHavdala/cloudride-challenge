@@ -40,8 +40,8 @@ The infrastructure includes:
   - Builds the Docker image, tags it with a unique identifier.
   - Pushes the image to the specified ECR repository.
   ```
-  docker tag hello-world-html:latest 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
   aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 753392824297.dkr.ecr.eu-west-1.amazonaws.com
+  docker tag hello-world-html:latest 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
   docker push 753392824297.dkr.ecr.eu-west-1.amazonaws.com/hello-world-repo:latest
   ```
   - Updates the ECS task definition with the new image URI.
