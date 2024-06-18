@@ -50,10 +50,6 @@ jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: cloudride-challenge
-
     steps:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
