@@ -4,6 +4,7 @@ resource "aws_appautoscaling_target" "ecs_service" {
     resource_id        = "service/${var.ecs_cluster_name}/${aws_ecs_service.hello_world_service.name}"
     scalable_dimension = "ecs:service:DesiredCount"
     service_namespace  = "ecs"
+    role_arn           = aws_iam_role.autoscaling_role.arn
 }
 
 resource "aws_appautoscaling_policy" "autoscale_cpu" {
