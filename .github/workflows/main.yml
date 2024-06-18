@@ -86,3 +86,4 @@ jobs:
  
       - name: Terraform Apply
         run: terraform apply
+        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
