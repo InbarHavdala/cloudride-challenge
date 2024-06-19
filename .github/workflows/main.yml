@@ -87,3 +87,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
+
+      - name: Restart ECS Service
+        run: |
+          aws ecs update-service --cluster ecs-clusteר --service hello_world_service --force-new-deployment
+        
