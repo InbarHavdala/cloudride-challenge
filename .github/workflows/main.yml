@@ -90,5 +90,5 @@ jobs:
 
       - name: Restart ECS Service
         run: |
-          aws ecs update-service --cluster ecs-clusteר --service hello_world_service --force-new-deployment
+          aws ecs update-service --cluster ecs-cluster --service hello_world_service --force-new-deployment
         
