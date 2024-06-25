@@ -1,4 +1,4 @@
-# Cloudride Challenge: AWS Infrastructure and CI/CD Pipeline Deployment
+# Terraform Challenge: AWS Infrastructure and CI/CD Pipeline Deployment
 
 This repository contains Terraform file and GitHub Actions workflow to deploy and manage AWS infrastructure and automate CI/CD pipelines for a simple "Hello World" application on ECS.
 
