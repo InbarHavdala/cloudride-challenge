@@ -72,21 +72,21 @@ jobs:
       - name: Terraform Formate
         id: fmt
         run: terraform fmt
-        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
+        working-directory: /home/runner/work/cloudride-challenge/terraform-challenge
 
       - name: Terraform Initialize
         id: init
         run: terraform init
-        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
+        working-directory: /home/runner/work/cloudride-challenge/terraform-challenge
 
       - name: Terraform Plan
         id: plan
         run: terraform plan
-        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
+        working-directory: /home/runner/work/cloudride-challenge/terraform-challenge
  
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        working-directory: /home/runner/work/cloudride-challenge/cloudride-challenge
+        working-directory: /home/runner/work/cloudride-challenge/terraform-challenge
 
       - name: Restart ECS Service
         run: |
